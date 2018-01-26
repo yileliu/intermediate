@@ -1,12 +1,16 @@
 import { Meteor } from "meteor/meteor";
-import {Template} from "meteor/templating";
+import { Template } from "meteor/templating";
 
 import './Recipe.html';
 
-Meteor.subscribe('recipes');
+Template.Recipes.onCreated(function(){
+    this.autorun(()=>{
+        this.subscribe('recipes');
+    });
+})
 
 Template.Recipes.helpers({
-    recipes(){
-        return Recipes.find({});
+    recipes() {
+        return Recipes.find({ author: Meteor.userId() });
     }
 })
