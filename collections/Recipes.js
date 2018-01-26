@@ -57,3 +57,5 @@ RecipeSchema = new SimpleSchema({
 });
 
 Recipes.attachSchema(RecipeSchema);
+
+export default Recipes;
