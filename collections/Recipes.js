@@ -1,11 +1,18 @@
 import SimpleSchema from 'simpl-schema';
 SimpleSchema.extendOptions(['autoform']);
-Recipes = new Meteor.Collection('recipes');
+Recipes = new Mongo.Collection('recipes');
 
 Recipes.allow({
-    insert: function(userId, doc){
+    insert: function (userId, doc) {
         return !!userId;
     }
+})
+
+const Ingredient = new SimpleSchema({
+    name: {
+        type: String
+    },
+    amount: String
 })
 
 RecipeSchema = new SimpleSchema({
@@ -16,6 +23,16 @@ RecipeSchema = new SimpleSchema({
     desc: {
         type: String,
         label: "Description"
+    },
+    ingredients: Array,
+    "ingredients.$": Ingredient,
+    inMenu: {
+        type: Boolean,
+        defaultValue: false,
+        optional: true,
+        autoform: {
+            type: "hidden"
+        }
     },
     author: {
         type: String,
