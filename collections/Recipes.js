@@ -2,6 +2,12 @@ import SimpleSchema from 'simpl-schema';
 SimpleSchema.extendOptions(['autoform']);
 Recipes = new Meteor.Collection('recipes');
 
+Recipes.allow({
+    insert: function(userId, doc){
+        return !!userId;
+    }
+})
+
 RecipeSchema = new SimpleSchema({
     name: {
         type: String,
@@ -26,6 +32,9 @@ RecipeSchema = new SimpleSchema({
         label: "Created At",
         autoValue: function () {
             return new Date();
+        },
+        autoform: {
+            type: "hidden"
         }
     }
 });
